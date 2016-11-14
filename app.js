@@ -3,7 +3,7 @@ var express = require( 'express' );
 var app = express();
 var morgan = require("morgan");
 var nunjucks = require("nunjucks");
-var routes = require('./routes/');
+var wikiRoutes = require('./routes/wiki');
 var bodyParser = require("body-parser");
 var models = require('./models');
 
@@ -26,11 +26,11 @@ app.use(bodyParser.json());
 //sees if req is POST or PUT, sees if content is encoded,
 //if so parses that information and puts it in req.body-
 //for forms to add info to req. object for you to use in routes
-app.use('/', routes);
+app.use('/wiki', wikiRoutes);
 
-models.User.sync({})
+models.User.sync({force: true})
 .then(function () {
-    return models.Page.sync({})
+    return models.Page.sync({force: true})
 })
 .then(function () {
     app.listen(7599, function () {

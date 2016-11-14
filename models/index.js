@@ -5,27 +5,27 @@ var db = new Sequelize('postgres://localhost:5432/wikistack', {
 
 var Page = db.define('page', {
     title: {
-        type: db.STRING, 
+        type: Sequelize.STRING,
         allowNull: false,
         defaultValue: 'title'
     },
     urlTitle: {
-        type: db.STRING,
-        isUrl: true,  
+        type: Sequelize.STRING,
+        isUrl: true,
         allowNull: false,
-        defaultValue: 'url-title'
+        //defaultValue: 'url-title'
     },
     content: {
-        type: db.TEXT,
+        type: Sequelize.TEXT,
         allowNull: false,
         defaultValue: 'content'
     },
     status: {
-        type: db.ENUM('open', 'closed')
+        type: Sequelize.ENUM('open', 'closed')
     },
     date: {
-        type: db.DATE,
-        defaultValue: db.NOW
+        type: Sequelize.DATE,
+        defaultValue: Sequelize.NOW
     }
 	}, {
 	getterMethods : {
@@ -35,12 +35,12 @@ var Page = db.define('page', {
 
 var User = db.define('user', {
     name: {
-        type: db.STRING,
+        type: Sequelize.STRING,
         allowNull: false,
         defaultValue: 'name'
     },
     email: {
-        type: db.STRING,
+        type: Sequelize.STRING,
         isEmail: true,
         allowNull: false,
         defaultValue: 'email@website.com'
