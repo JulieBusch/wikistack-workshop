@@ -5,6 +5,7 @@ var morgan = require("morgan");
 var nunjucks = require("nunjucks");
 var routes = require('./routes/');
 var bodyParser = require("body-parser");
+var models = require('./models');
 
 
 app.engine('html', nunjucks.render);
@@ -27,6 +28,13 @@ app.use(bodyParser.json());
 //for forms to add info to req. object for you to use in routes
 app.use('/', routes);
 
-app.listen(7599, function() {
-  console.log("server listening on 7599");
-});
+models.User.sync({})
+.then(function () {
+    return models.Page.sync({})
+})
+.then(function () {
+    app.listen(7599, function () {
+        console.log('Server is listening on port 7599!');
+    });
+})
+.catch(console.error);
