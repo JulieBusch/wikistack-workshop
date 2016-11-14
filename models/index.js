@@ -12,7 +12,7 @@ var Page = db.define('page', {
     urlTitle: {
         type: Sequelize.STRING,
         isUrl: true,
-        allowNull: false,
+        allowNull: false
         //defaultValue: 'url-title'
     },
     content: {
@@ -28,6 +28,15 @@ var Page = db.define('page', {
         defaultValue: Sequelize.NOW
     }
 	}, {
+	hooks : {
+		beforeValidate: function(pageInstance){
+			if (pageInstance.title) {pageInstance.urlTitle = pageInstance.title.replace(/\s+/g, "_").replace(/\W/g, "")}
+			else {
+				pageInstance.title = Math.random().toString(36).substring(2, 7)
+				pageInstance.urlTitle = pageInstance.title.replace(/\s+/g, "_").replace(/\W/g, "")
+				}
+			}
+		},
 	getterMethods : {
 		route: function() {return '/wiki/' + this.urlTitle}
 	}

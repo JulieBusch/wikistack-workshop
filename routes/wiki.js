@@ -15,8 +15,7 @@ router.post('/', function(req, res, next){
     title: req.body.title,
     content: req.body.content
   });
-  page.save();
-  res.redirect('/');
+  res.json(page.save());
 });
 
 router.get('/add', function(req, res, next){
